@@ -26,6 +26,7 @@ use App\Utils\{
 };
 use Exception;
 use App\Utils\DatatablesHelper;
+use Ramsey\Uuid\Uuid;
 
 class UserController extends AdminController
 {
@@ -103,6 +104,7 @@ class UserController extends AdminController
         $pass                       = Tools::genRandomChar();
         $user->user_name            = $email;
         $user->email                = $email;
+        $user->uuid                 = Uuid::uuid3(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
         $user->pass                 = Hash::passwordHash($pass);
         $user->passwd               = Tools::genRandomChar(6);
         $user->port                 = Tools::getAvPort();
